@@ -24,7 +24,7 @@ const DateButton = ({ handleSelect, selectedDay }) => {
               isSelected
                 ? "scale-105 bg-[#ec4899] text-white hover:shadow-[0_4px_16px_rgba(236,_72,_153,_0.3)]"
                 : "bg-white dark:bg-gray-900"
-            } hover:scale-105 ${!isSelected && "hover:bg-gray-50 dark:hover:bg-gray-800"}`}
+            } hover:scale-105 ${!isSelected && "hover:bg-gray-50 dark:hover:bg-gray-800 border-2"}`}
           >
             <span className="text-xs font-medium sm:text-sm">{day}</span>
             <span className="mb-1 text-base font-bold sm:text-xl">

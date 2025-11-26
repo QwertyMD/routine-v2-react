@@ -10,6 +10,8 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useUserGroup } from "@/context/UserGroupContext.jsx";
 import ClassDetailModal from "@/components/ClassDetailModal";
+import { useRoutines } from "@/hooks/useRoutines";
+import { useEffect } from "react";
 
 const markedDates = [
   new Date(2025, 1, 23),
@@ -17,36 +19,45 @@ const markedDates = [
   new Date(2025, 2, 20),
 ];
 const Home = () => {
+  const { routineData } = useRoutines();
   const [modalVisibile, setModalVisibile] = React.useState(false);
   const [selectedRoutine, setselectedRoutine] = React.useState(null);
 
-  const { userGroup } = useUserGroup();
+  // const { userGroup } = useUserGroup();
   const [todayRoutine, setTodayRoutine] = React.useState([]);
   const [selectedDay, setSelectedDay] = React.useState();
 
-  React.useEffect(() => {
-    const dayName = getTodayDay();
-    handleSelect(dayName);
-    const groupNumber = localStorage.getItem("user");
-    // setUserGroup(groupNumber);
-    setTodayRoutine(handleFilterRoutine(dayName, groupNumber));
-  }, [userGroup]);
+  // React.useEffect(() => {
 
-  const handleSelect = (date) => {
-    setSelectedDay(date);
-    setTodayRoutine(handleFilterRoutine(date, userGroup));
+  // }, [userGroup]);
+
+  const handleSelect = (day) => {
+    setSelectedDay(day);
+    setTodayRoutine(handleFilterRoutine(day));
   };
 
-  const handleFilterRoutine = (day, group) => {
-    return RoutineData.filter(
-      (data) => data.Day === day && data.Group.includes(group),
+  const handleFilterRoutine = (day) => {
+    if (!routineData.week) return [];
+    const filteredRoutine = routineData.week.filter(
+      (routine) => routine.day?.toLowerCase() === day?.toLowerCase(),
     );
+    console.log("Filtered Routine:", filteredRoutine);
+    return filteredRoutine.flatMap((routine) => routine.slots || []);
   };
 
   const handleRoutineClick = (routine) => {
     setselectedRoutine(routine);
     setModalVisibile(true);
   };
+
+  useEffect(() => {
+    if (!routineData) return;
+    const dayName = getTodayDay();
+    console.log("Routine Data :", dayName);
+    handleSelect(dayName);
+    // setUserGroup(groupNumber);
+    setTodayRoutine(handleFilterRoutine(dayName));
+  }, [routineData]);
 
   return (
     <>
@@ -61,7 +72,7 @@ const Home = () => {
       <p className="px-4 font-poppins text-2xl font-semibold">
         Upcoming Events
       </p>
-      <div className="px-4 pb-20 md:pb-4 lg:flex lg:gap-6">
+      <div className="px-4 pb-20 md:pb-4 lg:flex lg:gap-6 justify-between">
         <div className="">
           <div className="event-card w-full">
             <EventCard />
@@ -78,7 +89,7 @@ const Home = () => {
               ))
             ) : (
               <img
-                className="w-full max-h-[31.25rem] rounded-2xl shadow-[0_2px_8px_rgba(0,_0,_0,_0.1)] hover:shadow-[0_4px_16px_rgba(0,_0,_0,_0.1)]"
+                className="max-h-[31.25rem] w-full rounded-2xl shadow-[0_2px_8px_rgba(0,_0,_0,_0.1)] hover:shadow-[0_4px_16px_rgba(0,_0,_0,_0.1)]"
                 src="https://cdn.create.vista.com/api/media/small/320442286/stock-photo-404-error-page-not-found-shocked-man-looks-at-the-error-message-isolated"
                 alt=""
               />
