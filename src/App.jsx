@@ -20,6 +20,9 @@ import {
 import Teachers from "@/pages/admin/Teachers";
 import Modules from "@/pages/admin/Modules";
 import Rooms from "@/pages/admin/Rooms";
+import Routines from "./pages/admin/Routines";
+import Issues from "./pages/admin/Issues";
+import { RoutineProvider } from "./context/RoutineContext";
 
 const App = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -98,7 +101,14 @@ const App = () => {
           <Route path="/auth/signup" element={<Signup />} />
         </Route>
         <Route element={<AuthenticatedRoute />}>
-          <Route path="/" element={<MainLayout />}>
+          <Route
+            path="/"
+            element={
+              <RoutineProvider>
+                <MainLayout />
+              </RoutineProvider>
+            }
+          >
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/todo" element={<ToDo />} />
@@ -106,11 +116,20 @@ const App = () => {
           </Route>
         </Route>
         <Route element={<AuthenticatedRoute allowedRoles={["ADMIN"]} />}>
-          <Route path="/admin" element={<Admin />}>
+          <Route
+            path="/admin"
+            element={
+              <RoutineProvider>
+                <Admin />
+              </RoutineProvider>
+            }
+          >
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="users" element={<Users />} />
             <Route path="groups" element={<Groups />} />
+            <Route path="routines" element={<Routines />} />
+            <Route path="issues" element={<Issues />} />
             <Route path="teachers" element={<Teachers />} />
             <Route path="modules" element={<Modules />} />
             <Route path="rooms" element={<Rooms />} />
