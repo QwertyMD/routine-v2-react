@@ -28,7 +28,7 @@ export default {
   			}
   		},
   		maxWidth: {
-  			'8xl': '1560px'
+  			'8xl': '1600px'
   		},
   		spacing: {
   			'128': '32rem',

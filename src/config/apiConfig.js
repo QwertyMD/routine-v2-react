@@ -10,4 +10,15 @@ export const API_ENDPOINTS = {
   modules: "/module",
   rooms: "/room",
   teachers: "/teacher",
+  
+  routineByUserGroup: "/routines/group",
+  adminRoutines: "/routines/admin/group",
+  syncWeeklyRoutine: "/routines/admin/sync-weekly",
+
+  issues: "/issues",
+  issuesAdmin: "/issues/admin",
+  issuesAdminStats: "/issues/admin/stats",
+  myIssues: "/issues/my-issues",
+
+  users: "/user/users"
 };
