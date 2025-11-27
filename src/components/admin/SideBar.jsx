@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LayoutDashboard, User, Group, ChevronDown } from "lucide-react";
+import { LayoutDashboard, User, Group, ChevronDown, AlertTriangle } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
   SidebarContent,
@@ -8,6 +8,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { CalendarClock } from "lucide-react";
 
 function SideBar() {
   const location = useLocation();
@@ -21,6 +22,16 @@ function SideBar() {
       label: "Dashboard",
       icon: <LayoutDashboard />,
       path: "/admin/dashboard",
+    },
+    {
+      label: "Routines",
+      icon: <CalendarClock />,
+      path: "/admin/routines",
+    },
+    {
+      label: "Issues",
+      icon: <AlertTriangle />,
+      path: "/admin/issues",
     },
     {
       label: "Teachers",
